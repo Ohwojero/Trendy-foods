@@ -150,31 +150,46 @@ export default function Checkout() {
 
   useEffect(() => {
     const savedCart = JSON.parse(localStorage.getItem("cart") || "[]");
-    // For demonstration, if cart is empty, add sample items
-    if (savedCart.length === 0) {
-      const sampleCart: CartItem[] = [
-        {
-          id: 1,
-          name: "Gourmet Burger",
-          price: 12.99,
-          quantity: 1,
-          image: "/gourmet-burger-restaurant.jpg",
-        },
-        {
-          id: 2,
-          name: "Caesar Salad",
-          price: 8.99,
-          quantity: 1,
-          image: "/fresh-caesar-salad-healthy.jpg",
-        },
-      ];
-      setCart(sampleCart);
-      localStorage.setItem("cart", JSON.stringify(sampleCart));
-    } else {
-      setCart(savedCart);
+    let updatedCart = [...savedCart];
+
+    // Check for meal query parameters from food detail modal
+    const searchParams = new URLSearchParams(window.location.search);
+    const mealId = searchParams.get("meal");
+    const mealName = searchParams.get("name");
+    const mealPrice = searchParams.get("price");
+    const mealImage = searchParams.get("image");
+
+    if (mealId && mealName && mealPrice) {
+      const newItem: CartItem = {
+        id: parseInt(mealId),
+        name: decodeURIComponent(mealName),
+        price: parseFloat(mealPrice),
+        quantity: 1,
+        image: mealImage ? decodeURIComponent(mealImage) : "/placeholder.svg",
+      };
+
+      // Check if item already exists in cart
+      const existingItemIndex = updatedCart.findIndex(
+        (item) => item.id === newItem.id
+      );
+      if (existingItemIndex >= 0) {
+        // Increment quantity if item already exists
+        updatedCart[existingItemIndex].quantity += 1;
+      } else {
+        // Add new item to cart
+        updatedCart.push(newItem);
+      }
+
+      // Save updated cart to localStorage
+      localStorage.setItem("cart", JSON.stringify(updatedCart));
+
+      // Clean up URL by removing query parameters
+      router.replace("/checkout");
     }
+
+    setCart(updatedCart);
     setIsLoading(false);
-  }, []);
+  }, [router]);
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -215,7 +230,7 @@ export default function Checkout() {
       return;
     }
 
-    if (cart.length === 0) {
+    if (cart.length === 0){
       alert(
         "Your cart is empty. Please add items to your cart before placing an order."
       );

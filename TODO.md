@@ -1,3 +1,4 @@
 - [x] Add mobile sidebar toggle to admin dashboard
 - [x] Make sidebar responsive (hidden on mobile, overlay when open)
 - [x] Adjust main content layout for mobile
+- [x] Fix checkout to show selected meal from food detail modal
