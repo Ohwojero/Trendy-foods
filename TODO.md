@@ -1,12 +1,3 @@
-- [x] Remove WelcomePopup component from footer.tsx
-- [x] Remove showWelcome and welcomeMessage state variables
-- [x] Remove handleSocialClick function
-- [x] Remove conditional rendering of the popup
-- [x] Remove onClick handlers from social media buttons
-- [x] Add WhatsAppIcon component
-- [x] Remove TwitterIcon component
-- [x] Update social media buttons to WhatsApp, Instagram, Facebook
-- [x] Add scroll effect to navbar: change background color and add border-bottom on scroll
-- [x] Improve about page: add more images and enhance layout
-- [x] Improve home page: enhance hero section, add animations, improve testimonials
-- [x] Improve services page: add creativity and make it more attractive
+- [x] Add mobile sidebar toggle to admin dashboard
+- [x] Make sidebar responsive (hidden on mobile, overlay when open)
+- [x] Adjust main content layout for mobile
