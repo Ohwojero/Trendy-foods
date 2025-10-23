@@ -1,9 +1,9 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import FoodDetailModal from "./food-detail-modal"
+import { useState } from "react";
+import FoodDetailModal from "./food-detail-modal";
 
-const StarIcon = () => <span className="text-yellow-400">★</span>
+const StarIcon = () => <span className="text-yellow-400">★</span>;
 
 const meals = [
   {
@@ -54,26 +54,33 @@ const meals = [
     description: "Aromatic curry with coconut milk and vegetables",
     rating: 4.7,
   },
-]
+];
 
 export default function FeaturedMeals() {
-  const [selectedMeal, setSelectedMeal] = useState<(typeof meals)[0] | null>(null)
+  const [selectedMeal, setSelectedMeal] = useState<(typeof meals)[0] | null>(
+    null
+  );
 
   return (
     <section id="featured" className="py-16 md:py-24 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Featured Meals</h2>
-          <p className="text-xl text-gray-600">Discover our most popular dishes</p>
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+            Featured Meals
+          </h2>
+          <p className="text-xl text-gray-600">
+            Discover our most popular dishes
+          </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {meals.map((meal) => (
             <div
               key={meal.id}
-              className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden group cursor-pointer border-t-4 border-red-600"
+              className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden group cursor-pointer border-t-4 border-red-600 relative"
               onClick={() => setSelectedMeal(meal)}
             >
+              <div className="absolute top-0 right-0 w-20 h-20 bg-red-100 rounded-full -mr-10 -mt-10 opacity-20"></div>
               <div className="relative h-64 overflow-hidden">
                 <img
                   src={meal.image || "/placeholder.svg"}
@@ -81,22 +88,28 @@ export default function FeaturedMeals() {
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                 />
               </div>
-              <div className="p-6">
-                <h3 className="text-xl font-bold text-gray-900 mb-2">{meal.name}</h3>
+              <div className="p-6 relative z-10">
+                <h3 className="text-xl font-bold text-gray-900 mb-2">
+                  {meal.name}
+                </h3>
                 <p className="text-gray-600 text-sm mb-4">{meal.description}</p>
                 <div className="flex items-center justify-between mb-4">
-                  <span className="text-2xl font-bold text-red-600">${meal.price}</span>
+                  <span className="text-2xl font-bold text-red-600">
+                    ${meal.price}
+                  </span>
                   <div className="flex items-center gap-1">
                     <StarIcon />
-                    <span className="text-sm font-semibold text-gray-700">{meal.rating}</span>
+                    <span className="text-sm font-semibold text-gray-700">
+                      {meal.rating}
+                    </span>
                   </div>
                 </div>
                 <button
                   onClick={(e) => {
-                    e.stopPropagation()
-                    setSelectedMeal(meal)
+                    e.stopPropagation();
+                    setSelectedMeal(meal);
                   }}
-                  className="w-full py-2 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700 transition"
+                  className="w-full py-2 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700 transition-all duration-300 hover:shadow-lg"
                 >
                   Place Order
                 </button>
@@ -106,7 +119,12 @@ export default function FeaturedMeals() {
         </div>
       </div>
 
-      {selectedMeal && <FoodDetailModal meal={selectedMeal} onClose={() => setSelectedMeal(null)} />}
+      {selectedMeal && (
+        <FoodDetailModal
+          meal={selectedMeal!}
+          onClose={() => setSelectedMeal(null)}
+        />
+      )}
     </section>
-  )
+  );
 }

@@ -1,25 +1,60 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { useState } from "react"
+import Link from "next/link";
+import { useState, useEffect } from "react";
 
 const MenuIcon = () => (
-  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+  <svg
+    className="w-6 h-6"
+    fill="none"
+    stroke="currentColor"
+    viewBox="0 0 24 24"
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={2}
+      d="M4 6h16M4 12h16M4 18h16"
+    />
   </svg>
-)
+);
 
 const CloseIcon = () => (
-  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+  <svg
+    className="w-6 h-6"
+    fill="none"
+    stroke="currentColor"
+    viewBox="0 0 24 24"
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={2}
+      d="M6 18L18 6M6 6l12 12"
+    />
   </svg>
-)
+);
 
 export default function Navigation() {
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 0);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    <nav className="sticky top-0 z-50 bg-white border-b border-gray-100 shadow-sm">
+    <nav
+      className={`sticky top-0 z-50 transition-all duration-300 ${
+        isScrolled
+          ? "bg-white/95 backdrop-blur-sm border-b-2 border-red-600 shadow-lg"
+          : "bg-white border-b border-gray-100 shadow-sm"
+      }`}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
@@ -27,24 +62,41 @@ export default function Navigation() {
             <div className="w-10 h-10 bg-red-600 rounded-lg flex items-center justify-center">
               <span className="text-white font-bold text-lg">TF</span>
             </div>
-            <span className="font-bold text-xl text-gray-900 hidden sm:inline">Trendy Foods</span>
+            <span className="font-bold text-xl text-gray-900 hidden sm:inline">
+              Trendy Foods
+            </span>
           </Link>
 
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center gap-8">
-            <Link href="/" className="text-gray-700 hover:text-red-600 transition">
+            <Link
+              href="/"
+              className="text-gray-700 hover:text-red-600 transition"
+            >
               Home
             </Link>
-            <Link href="/about" className="text-gray-700 hover:text-red-600 transition">
+            <Link
+              href="/about"
+              className="text-gray-700 hover:text-red-600 transition"
+            >
               About
             </Link>
-            <Link href="/services" className="text-gray-700 hover:text-red-600 transition">
+            <Link
+              href="/services"
+              className="text-gray-700 hover:text-red-600 transition"
+            >
               Services
             </Link>
-            <Link href="/contact" className="text-gray-700 hover:text-red-600 transition">
+            <Link
+              href="/contact"
+              className="text-gray-700 hover:text-red-600 transition"
+            >
               Contact
             </Link>
-            <Link href="/admin" className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition">
+            <Link
+              href="/admin"
+              className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
+            >
               Admin
             </Link>
           </div>
@@ -61,24 +113,39 @@ export default function Navigation() {
         {/* Mobile Menu */}
         {isOpen && (
           <div className="md:hidden pb-4 space-y-2 animate-in fade-in slide-in-from-top-2">
-            <Link href="/" className="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+            <Link
+              href="/"
+              className="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg"
+            >
               Home
             </Link>
-            <Link href="/about" className="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+            <Link
+              href="/about"
+              className="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg"
+            >
               About
             </Link>
-            <Link href="/services" className="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+            <Link
+              href="/services"
+              className="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg"
+            >
               Services
             </Link>
-            <Link href="/contact" className="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+            <Link
+              href="/contact"
+              className="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg"
+            >
               Contact
             </Link>
-            <Link href="/admin" className="block px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">
+            <Link
+              href="/admin"
+              className="block px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700"
+            >
               Admin
             </Link>
           </div>
         )}
       </div>
     </nav>
-  )
+  );
 }

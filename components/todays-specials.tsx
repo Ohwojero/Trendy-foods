@@ -1,19 +1,39 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import FoodDetailModal from "./food-detail-modal"
+import { useState } from "react";
+import FoodDetailModal from "./food-detail-modal";
 
 const ChevronLeftIcon = () => (
-  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+  <svg
+    className="w-6 h-6"
+    fill="none"
+    stroke="currentColor"
+    viewBox="0 0 24 24"
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={2}
+      d="M15 19l-7-7 7-7"
+    />
   </svg>
-)
+);
 
 const ChevronRightIcon = () => (
-  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+  <svg
+    className="w-6 h-6"
+    fill="none"
+    stroke="currentColor"
+    viewBox="0 0 24 24"
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={2}
+      d="M9 5l7 7-7 7"
+    />
   </svg>
-)
+);
 
 const specials = [
   {
@@ -40,21 +60,28 @@ const specials = [
     description: "Warm chocolate cake with molten center",
     rating: 5.0,
   },
-]
+];
 
 export default function TodaysSpecials() {
-  const [current, setCurrent] = useState(0)
-  const [selectedMeal, setSelectedMeal] = useState<(typeof specials)[0] | null>(null)
+  const [current, setCurrent] = useState(0);
+  const [selectedMeal, setSelectedMeal] = useState<(typeof specials)[0] | null>(
+    null
+  );
 
-  const next = () => setCurrent((prev) => (prev + 1) % specials.length)
-  const prev = () => setCurrent((prev) => (prev - 1 + specials.length) % specials.length)
+  const next = () => setCurrent((prev) => (prev + 1) % specials.length);
+  const prev = () =>
+    setCurrent((prev) => (prev - 1 + specials.length) % specials.length);
 
   return (
     <section className="py-16 md:py-24 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Today's Specials</h2>
-          <p className="text-xl text-gray-600">Limited time offers you won't want to miss</p>
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+            Today's Specials
+          </h2>
+          <p className="text-xl text-gray-600">
+            Limited time offers you won't want to miss
+          </p>
         </div>
 
         <div className="relative">
@@ -63,34 +90,43 @@ export default function TodaysSpecials() {
               <div
                 key={special.id}
                 className={`transition-all duration-300 ${
-                  index === current ? "opacity-100 scale-100" : "opacity-50 scale-95 hidden md:block"
+                  index === current
+                    ? "opacity-100 scale-100"
+                    : "opacity-50 scale-95 hidden md:block"
                 }`}
               >
                 <div
-                  className="bg-white rounded-xl shadow-lg overflow-hidden cursor-pointer hover:shadow-xl transition-all border-l-4 border-red-600"
+                  className="bg-white rounded-xl shadow-lg overflow-hidden cursor-pointer hover:shadow-xl transition-all border-l-4 border-red-600 relative"
                   onClick={() => setSelectedMeal(special)}
                 >
+                  <div className="absolute top-0 right-0 w-20 h-20 bg-red-100 rounded-full -mr-10 -mt-10 opacity-20"></div>
                   <div className="relative h-64 overflow-hidden">
                     <img
                       src={special.image || "/placeholder.svg"}
                       alt={special.name}
                       className="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
                     />
-                    <div className="absolute top-4 right-4 bg-red-600 text-white px-4 py-2 rounded-full font-bold">
+                    <div className="absolute top-4 right-4 bg-red-600 text-white px-4 py-2 rounded-full font-bold z-10">
                       Special
                     </div>
                   </div>
-                  <div className="p-6">
-                    <h3 className="text-xl font-bold text-gray-900 mb-2">{special.name}</h3>
-                    <p className="text-gray-600 text-sm mb-4">{special.description}</p>
+                  <div className="p-6 relative z-10">
+                    <h3 className="text-xl font-bold text-gray-900 mb-2">
+                      {special.name}
+                    </h3>
+                    <p className="text-gray-600 text-sm mb-4">
+                      {special.description}
+                    </p>
                     <div className="flex items-center justify-between">
-                      <span className="text-2xl font-bold text-red-600">${special.price}</span>
+                      <span className="text-2xl font-bold text-red-600">
+                        ${special.price}
+                      </span>
                       <button
                         onClick={(e) => {
-                          e.stopPropagation()
-                          setSelectedMeal(special)
+                          e.stopPropagation();
+                          setSelectedMeal(special);
                         }}
-                        className="px-4 py-2 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700 transition"
+                        className="px-4 py-2 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700 transition-all duration-300 hover:shadow-lg"
                       >
                         Order
                       </button>
@@ -117,7 +153,12 @@ export default function TodaysSpecials() {
         </div>
       </div>
 
-      {selectedMeal && <FoodDetailModal meal={selectedMeal} onClose={() => setSelectedMeal(null)} />}
+      {selectedMeal && (
+        <FoodDetailModal
+          meal={selectedMeal!}
+          onClose={() => setSelectedMeal(null)}
+        />
+      )}
     </section>
-  )
+  );
 }
