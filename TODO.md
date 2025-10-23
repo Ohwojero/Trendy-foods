@@ -1,4 +1,2 @@
-- [x] Add mobile sidebar toggle to admin dashboard
-- [x] Make sidebar responsive (hidden on mobile, overlay when open)
-- [x] Adjust main content layout for mobile
-- [x] Fix checkout to show selected meal from food detail modal
+- [x] Edit updateOrderStatus function in components/admin-order-management.tsx to update selectedOrder when status changes
+- [x] Add different background colors for orders based on status (pending: yellow, in-progress: blue, completed: green)
