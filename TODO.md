@@ -1,2 +1,3 @@
 - [x] Edit updateOrderStatus function in components/admin-order-management.tsx to update selectedOrder when status changes
 - [x] Add different background colors for orders based on status (pending: yellow, in-progress: blue, completed: green)
+- [x] Replace Image URL input with file selector in admin menu management
